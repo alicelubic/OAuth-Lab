@@ -27,13 +27,17 @@ public class MainActivity extends AppCompatActivity {
     ListView mListView;
     Button mButton;
     EditText mEditText;
+    String mUserInput;
     private static String mToken;
     public static final String CONSUMER_KEY = "8yTxWf26e73uo7EmDKJxRHXg0";
     public static final String CONSUMER_SECRET = "Srjm9rdbWrLanZrSfKPNjkIOBHkNbU140dTLEPyfAWOVa46uE0";
     public static final String TAG = "MainActivity";
+
     public static final String KEY_AND_SECRET_CONCAT = CONSUMER_KEY + ":" + CONSUMER_SECRET;
+
     public static String KEY_BASE64;
     public String screen_name;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,17 +46,34 @@ public class MainActivity extends AppCompatActivity {
         mListView = (ListView) findViewById(R.id.listview);
         mButton = (Button) findViewById(R.id.button);
         mEditText = (EditText) findViewById(R.id.edittext);
-
+       mUserInput =  mEditText.getText().toString();
         ArrayList<String> tweets = new ArrayList<>();
 
 
-
+            //base64 encoding my key
         byte[] concatArray = KEY_AND_SECRET_CONCAT.getBytes();
         KEY_BASE64 = Base64.encodeToString(concatArray, Base64.DEFAULT);
 
+        /**this is what im doing along with the lesson with alan**/
+        //request must have Headers for Authorization and Content-Type
+        //form body must only be grant-type=client_credentials
+
+        //the api request
+
+
+
+
+
+
+
+
+
+        /**end of what we did in lesson**/
         //once we have the token, then we gotta make the actual request for data...
         //then parse the JSON response  to get the tweet content/date/time etc
         //then with that data, we runOnUiThread (cuz its been running in the background) and set it to the listview or something....... right?
+
+
 
         OkHttpClient client = new OkHttpClient();
 
@@ -102,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
     private String getToken() {
         OkHttpClient client = new OkHttpClient();
         RequestBody formBody = new FormBody.Builder()
-                .add("Authorization", "Basic" + KEY_BASE64)
+                .add("Authorization", "Basic " + KEY_BASE64)
                 .add("Content_Type", "application/x-www-form-urlencoded")
                 .add("charset", "UTF-8")
                 .add("grant_type", "client_credentials")
